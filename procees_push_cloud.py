@@ -7,7 +7,7 @@ import sys
 import requests
 
 
-def push_toCloud(data, device_name) :
+def push_toCloud(data, device_name, data1) :
     print(data)
     print("-----------------------------------------------")
     app_id = '123'
@@ -15,7 +15,7 @@ def push_toCloud(data, device_name) :
     app_status = 'ON'
     watt = float(data[3]) * float(data[1]) * float(data[0])
     kWatt = watt / 1000 
-    cd = '11111||' + str(data[0]) + ',' + str(data[1]) + ',' + str(data[2]) + ',' + str(data[3]) + ',' + str(data[4]) + ',' + str(data[5]) + ',' + str(data[6]) + ',' + app_id + ',' + app_name + ',' + app_status + ',' + str(watt) + ',' + str(kWatt)
+    cd = '11111||' + str(data[0]) + ',' + str(data[1]) + ',' + str(data[2]) + ',' + str(data[3]) + ',' + str(data[4]) + ',' + str(data[5]) + ',' + str(data[6]) + ',' + app_id + ',' + app_name + ',' + app_status + ',' + str(watt) + ',' + str(kWatt) + '||' + str(data1[0])
 
     payload = {
         'device_id' : '11111', 
@@ -88,9 +88,9 @@ def process_input(data1) :
     #print(X)
     data = X
     sys.stdout.flush()
-    get_model_result(X, data)
+    get_model_result(X, data, data1)
 
-def get_model_result(X, data):
+def get_model_result(X, data, data1):
     quantile_transformer = preprocessing.QuantileTransformer(random_state=0)
     X = np.array(X)
     X = X.reshape(-1, 1)
@@ -144,4 +144,4 @@ def get_model_result(X, data):
         device_label.append(val)
     #print(device_lable)
 
-    push_toCloud(data, device_label[0])
+    push_toCloud(data, device_label[0], data1)
