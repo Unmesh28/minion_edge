@@ -125,7 +125,8 @@ def get_model_result(X, data):
     # with open('/home/pi/model_log.txt','a') as fp:
     #         fp.write(str(output_data))
 
-    print(output_data + "************")
+    print(output_data)  
+    print("************")
 
     pred = []
     for val in output_data:
