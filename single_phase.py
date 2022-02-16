@@ -26,7 +26,7 @@ fp.close()
 
 def write_to_csv(data) :
     with open('/home/pi/single_phase_log.csv','a') as fp:
-            fp.write(data)
+        fp.write(data)
         #fp.close()
 
 def create_job(target, *args):
