@@ -2,6 +2,7 @@ from distutils.command.clean import clean
 import numpy as np
 from sklearn import preprocessing
 import tensorflow as tf
+import sys
 
 def clean_voltage(voltage) :
     voltage_data = str(voltage).split('.')
@@ -63,6 +64,7 @@ def process_input(data1) :
     X.append(clean_reactive_power(data[6]))
     X.append(clean_frequency(data[7]))
     print(X)
+    sys.stdout.flush()
     get_model_result(X)
 
 def get_model_result(X):
@@ -81,10 +83,12 @@ def get_model_result(X):
     input_details = interpreter.get_input_details()
     output_details = interpreter.get_output_details()
     print(input_details)
+    sys.stdout.flush()
 
     # Test the model on input data.
     input_shape = input_details[0]['shape']
     print(input_shape)
+    sys.stdout.flush()
 
     input_data = np.array(X_tansform, dtype=np.float32)
     input_data = np.array(X_tansform.reshape(1,7), dtype=np.float32)
@@ -95,5 +99,6 @@ def get_model_result(X):
 
     output_data = interpreter.get_tensor(output_details[0]['index'])
     print("Output data :" + str(output_data))
+    sys.stdout.flush()
     with open('/home/pi/model_log.txt','a') as fp:
             fp.write(output_data)
