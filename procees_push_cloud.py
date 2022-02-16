@@ -9,6 +9,8 @@ import requests
 
 def push_toCloud(data, device_name, data1) :
     print(data)
+    print(data1[0])
+    print(data1)
     print("-----------------------------------------------")
     app_id = '123'
     app_name = device_name
