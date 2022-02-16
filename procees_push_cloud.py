@@ -137,9 +137,9 @@ def get_model_result(X, data):
     print(pred)
     device_label = []
     for i in pred:
-        print(lookup_table[i])
+        print(lookup_table[i][0])
         val = lookup_table[i][0]
         device_label.append(val)
     #print(device_lable)
 
-    push_toCloud(data, device_label)
+    push_toCloud(data, device_label[0])
