@@ -86,7 +86,7 @@ def process_input(data1) :
     #print(X)
     data = X
     sys.stdout.flush()
-    get_model_result(X)
+    get_model_result(X, data)
 
 def get_model_result(X, data):
     quantile_transformer = preprocessing.QuantileTransformer(random_state=0)
