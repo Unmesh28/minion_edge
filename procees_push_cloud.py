@@ -7,17 +7,15 @@ import sys
 import requests
 
 
-def push_toCloud(data, device_name, data1) :
+def push_toCloud(data, device_name, timestamp) :
     print(data)
-    print(data1[0])
-    print(data1)
     print("-----------------------------------------------")
     app_id = '123'
     app_name = device_name
     app_status = 'ON'
     watt = float(data[3]) * float(data[1]) * float(data[0])
     kWatt = watt / 1000 
-    cd = '11111||' + str(data[0]) + ',' + str(data[1]) + ',' + str(data[2]) + ',' + str(data[3]) + ',' + str(data[4]) + ',' + str(data[5]) + ',' + str(data[6]) + ',' + app_id + ',' + app_name + ',' + app_status + ',' + str(watt) + ',' + str(kWatt) + '||' + str(data1[0])
+    cd = '11111||' + str(data[0]) + ',' + str(data[1]) + ',' + str(data[2]) + ',' + str(data[3]) + ',' + str(data[4]) + ',' + str(data[5]) + ',' + str(data[6]) + ',' + app_id + ',' + app_name + ',' + app_status + ',' + str(watt) + ',' + str(kWatt) + '||' + str(timestamp)
 
     payload = {
         'device_id' : '11111', 
@@ -92,9 +90,9 @@ def process_input(data1) :
     #print(X)
     data = X
     sys.stdout.flush()
-    get_model_result(X, data, data1)
+    get_model_result(X, data, data[0])
 
-def get_model_result(X, data, data1):
+def get_model_result(X, data, timestamp):
     quantile_transformer = preprocessing.QuantileTransformer(random_state=0)
     X = np.array(X)
     X = X.reshape(-1, 1)
@@ -148,4 +146,4 @@ def get_model_result(X, data, data1):
         device_label.append(val)
     #print(device_lable)
 
-    push_toCloud(data, device_label[0], data1)
+    push_toCloud(data, device_label[0], timestamp)
