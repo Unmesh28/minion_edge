@@ -53,7 +53,6 @@ while True:
         with open('/home/pi/single_phase_log.csv','a') as fp:
             fp.write(data)
         #fp.close()
-        p1.join()
         #p2.join()
         
 

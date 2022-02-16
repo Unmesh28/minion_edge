@@ -95,3 +95,5 @@ def get_model_result(X):
 
     output_data = interpreter.get_tensor(output_details[0]['index'])
     print("Output data :" + str(output_data))
+    with open('/home/pi/model_log.txt','a') as fp:
+            fp.write(output_data)
