@@ -136,7 +136,7 @@ def get_model_result(X, data):
     print(pred)
     device_label = []
     for i in pred:
-        print(lookup_table[i][0])
+        print(lookup_table[i])
         val = lookup_table[i][0]
         device_label.append(val)
     #print(device_lable)
