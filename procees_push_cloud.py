@@ -8,6 +8,8 @@ import requests
 
 
 def push_toCloud(data, device_name) :
+    print(data)
+    print("-----------------------------------------------")
     app_id = '123'
     app_name = device_name
     app_status = 'ON'
