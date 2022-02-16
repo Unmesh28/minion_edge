@@ -53,7 +53,7 @@ def clean_frequency(frequency) :
     return res
 
 
-def process_input(data) :
+def process_input(data = [], *args) :
     X = []
     X.append(clean_voltage(data[1]))  
     X.append(clean_current[data[2]])
