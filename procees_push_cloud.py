@@ -57,10 +57,12 @@ def clean_frequency(frequency) :
 def process_input(data1) :
     data = data1.split(',')
     X = []
+    X.append(data[0])
     X.append(clean_voltage(data[1]))  
     X.append(clean_current(data[2]))
     X.append(clean_realPower(data[3]))
     X.append(clean_powerFactor(data[4]))
+    X.append(data[5])
     X.append(clean_reactive_power(data[6]))
     X.append(clean_frequency(data[7]))
     print(X)
