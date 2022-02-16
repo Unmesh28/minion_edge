@@ -125,7 +125,7 @@ def get_model_result(X, data):
     # with open('/home/pi/model_log.txt','a') as fp:
     #         fp.write(str(output_data))
 
-    output = round((output_data[0].clip(0, 13))[0])
+    output = round((output_data[0][0].clip(0, 13))[0])
     lookup_table = {1:["baseline", "base"], 2: ["laptop", "laptopcharger", "chargerlaptop"], 3: ["ac", "air conditioner", "aircondition","air", "airconditionerfan"], 4: ["tv","television","smart tv", "LED TV", "led", "smarttv", "ledtv"], 5: ["refrigerator", "fridge"], 6: ["heater", "Geyser", "waterheater","heat water", "heatergeyser"], 7: ["blower","air blower"], 8: ["hair dryer", "dryer", "hair", "hairdryer"], 9: ["mobile", "mobilecharger"], 10: ["charger"], 11: ["oven", "microwave", "microwavemicrowave", "microwaveovenmicrowave"], 12: ["Ceiling Fan", "ceiling","ceilingfan", "fan"], 13: ["LED Lamp", "led", "lamp", "ledlamps", "ledlamp", "lampslamps"], 14: ["washingmachine", "washing"], 15: ["kettle", "waterjug"], 16: ["ironbox", "iron"], 17:["floor cleaner", "cleaner", "vaccum"]}
 
     device_lable = lookup_table[output][0]
