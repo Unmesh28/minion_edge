@@ -19,7 +19,7 @@ def push_toCloud(data, device_name, timestamp) :
     ph1 =  str(data[0]) + ',' + str(data[1]) + ',' + str(data[2]) + ',' + str(data[3]) + ',' + str(data[4]) + ',' + str(data[5]) + ',' + str(data[6]) + ',' + app_id + ',' + app_name + ',' + app_status + ',' + str(watt) + ',' + str(kWatt) 
     ph2 =  str(data[0]) + ',' + str(data[1]) + ',' + str(data[2]) + ',' + str(data[3]) + ',' + str(data[4]) + ',' + str(data[5]) + ',' + str(data[6]) + ',' + app_id + ',' + app_name + ',' + app_status + ',' + str(watt) + ',' + str(kWatt) 
     ph3 =  str(data[0]) + ',' + str(data[1]) + ',' + str(data[2]) + ',' + str(data[3]) + ',' + str(data[4]) + ',' + str(data[5]) + ',' + str(data[6]) + ',' + app_id + ',' + app_name + ',' + app_status + ',' + str(watt) + ',' + str(kWatt) 
-    cd = '11111||' + '|' + ph1 + '|' + ph2 + '|' + ph3 + '||' + str(timestamp)
+    cd = '11111||' + ph1 + '|' + ph2 + '|' + ph3 + '||' + str(timestamp)
 
     payload = {
         'device_id' : '11111', 
