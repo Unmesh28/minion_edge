@@ -31,9 +31,9 @@ def clean_realPower(realPower):
 def clean_powerFactor(powerFactor):
     pf_data = str(powerFactor).split(".")
     if len(pf_data) > 1:
-        res = int(pf_data[0]+"."+pf_data[1])
+        res = float(pf_data[0]+"."+pf_data[1])
     else:
-        res = int(pf_data[0])
+        res = float(pf_data[0])
     return res
 
 def clean_reactive_power(reactivePower):
