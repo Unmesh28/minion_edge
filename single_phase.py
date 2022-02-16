@@ -41,7 +41,7 @@ while True:
         line1 = line.decode()
         data = ct+','+line1 
         print(line1)
-        p1 = Process(target=process_input, args=(data))
+        p1 = Process(target=process_input, args=(str(data)))
         #p2 = Process(target=write_to_csv, args=(data))
         p1.start()
         with open('/home/pi/single_phase_log.csv','a') as fp:
