@@ -1,8 +1,26 @@
 from distutils.command.clean import clean
+from aiohttp import payload
 import numpy as np
 from sklearn import preprocessing
 import tensorflow as tf
 import sys
+import requests
+
+
+def push_toCloud(data, device_name) :
+    app_id = '123'
+    app_name = device_name
+    app_status = 'ON'
+    watt = float(data[3]) * float(data[1]) * float(data[0])
+    kWatt = watt / 1000 
+    cd = '11111||' + str(data[0]) + ',' + str(data[1]) + ',' + str(data[2]) + ',' + str(data[3]) + ',' + str(data[4]) + ',' + str(data[5]) + ',' + str(data[6]) + ',' + app_id + ',' + app_name + ',' + app_status + ',' + str(watt) + ',' + str(kWatt)
+
+    payload = {
+        'device_id' : '11111', 
+        'cd' : cd
+    }
+    res = requests.post('http://35.168.111.248/dashboarddev/public/api/newconsumption', data=payload)
+    print(res.text)
 
 def clean_voltage(voltage) :
     voltage_data = str(voltage).split('.')
@@ -65,33 +83,34 @@ def process_input(data1) :
     X.append(data[5])
     X.append(clean_reactive_power(data[6]))
     X.append(clean_frequency(data[7]))
-    print(X)
+    #print(X)
+    data = X
     sys.stdout.flush()
     get_model_result(X)
 
-def get_model_result(X):
+def get_model_result(X, data):
     quantile_transformer = preprocessing.QuantileTransformer(random_state=0)
     X = np.array(X)
     X = X.reshape(-1, 1)
     X_tansform = quantile_transformer.fit_transform(X)
 
-    print(X_tansform)
+    #print(X_tansform)
     interpreter = tf.lite.Interpreter(model_path="/home/pi/minion_lab/model.tflite")
-    print(interpreter.get_input_details())
-    print(interpreter.get_output_details())
-    print(interpreter.get_tensor_details())
+    #print(interpreter.get_input_details())
+    #print(interpreter.get_output_details())
+    #print(interpreter.get_tensor_details())
     interpreter.allocate_tensors()
 
     # Get input and output tensors.
     input_details = interpreter.get_input_details()
     output_details = interpreter.get_output_details()
-    print(input_details)
-    sys.stdout.flush()
+    #print(input_details)
+    #sys.stdout.flush()
 
     # Test the model on input data.
     input_shape = input_details[0]['shape']
-    print(input_shape)
-    sys.stdout.flush()
+    #print(input_shape)
+    #sys.stdout.flush()
 
     input_data = np.array(X_tansform, dtype=np.float32)
     input_data = np.array(X_tansform.reshape(1,7), dtype=np.float32)
@@ -101,7 +120,15 @@ def get_model_result(X):
     interpreter.invoke()
 
     output_data = interpreter.get_tensor(output_details[0]['index'])
-    print("Output data :" + str(output_data))
-    sys.stdout.flush()
-    with open('/home/pi/model_log.txt','a') as fp:
-            fp.write(str(output_data))
+    #print("Output data :" + str(output_data))
+    #sys.stdout.flush()
+    # with open('/home/pi/model_log.txt','a') as fp:
+    #         fp.write(str(output_data))
+
+    output = round((output_data.clip(0, 13))[0])
+    lookup_table = {1:["baseline", "base"], 2: ["laptop", "laptopcharger", "chargerlaptop"], 3: ["ac", "air conditioner", "aircondition","air", "airconditionerfan"], 4: ["tv","television","smart tv", "LED TV", "led", "smarttv", "ledtv"], 5: ["refrigerator", "fridge"], 6: ["heater", "Geyser", "waterheater","heat water", "heatergeyser"], 7: ["blower","air blower"], 8: ["hair dryer", "dryer", "hair", "hairdryer"], 9: ["mobile", "mobilecharger"], 10: ["charger"], 11: ["oven", "microwave", "microwavemicrowave", "microwaveovenmicrowave"], 12: ["Ceiling Fan", "ceiling","ceilingfan", "fan"], 13: ["LED Lamp", "led", "lamp", "ledlamps", "ledlamp", "lampslamps"], 14: ["washingmachine", "washing"], 15: ["kettle", "waterjug"], 16: ["ironbox", "iron"], 17:["floor cleaner", "cleaner", "vaccum"]}
+
+    device_lable = lookup_table[output][0]
+    #print(device_lable)
+
+    push_toCloud(data, device_lable)
