@@ -46,12 +46,12 @@ while True:
         line1 = line.decode()
         data = ct+','+line1 
         print(line1)
-        ps = create_job(process_input, data)
+        ps = create_job(write_to_csv, data)
         #p1 = Process(target=process_input, args=(str(data)))
         #p2 = Process(target=write_to_csv, args=(data))
         #p1.start()
-        with open('/home/pi/single_phase_log.csv','a') as fp:
-            fp.write(data)
+        # with open('/home/pi/single_phase_log.csv','a') as fp:
+        #     fp.write(data)
         #fp.close()
         #p2.join()
         
