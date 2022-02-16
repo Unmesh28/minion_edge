@@ -43,11 +43,13 @@ while True:
         data1 = data.split(',')
         print(line1)
         p1 = Process(target=process_input, args=(data1))
-        p2 = Process(target=write_to_csv, args=(data))
+        #p2 = Process(target=write_to_csv, args=(data))
         p1.start()
-        p2.start()
+        with open('/home/pi/single_phase_log.csv','a') as fp:
+            fp.write(data)
+        #fp.close()
         p1.join()
-        p2.join()
+        #p2.join()
         
 
     except Exception as e:
