@@ -79,6 +79,7 @@ def clean_frequency(frequency) :
 
 def process_input(data1) :
     data = data1.split(',')
+    data1 = data1.split(',')
     X = []
     #X.append(data[0])
     X.append(clean_voltage(data[1]))  
@@ -90,8 +91,8 @@ def process_input(data1) :
     X.append(clean_frequency(data[7]))
     #print(X)
     data = X
-    sys.stdout.flush()
-    get_model_result(X, data, data[0])
+    
+    get_model_result(X, data, data1[0])
 
 def get_model_result(X, data, timestamp):
     quantile_transformer = preprocessing.QuantileTransformer(random_state=0)
