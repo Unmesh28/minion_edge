@@ -69,7 +69,7 @@ def process_input(data1) :
 
 def get_model_result(X):
     quantile_transformer = preprocessing.QuantileTransformer(random_state=0)
-    X = X.reshape(1, -1)
+    
 
     X_tansform = quantile_transformer.fit_transform(X)
 
