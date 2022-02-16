@@ -21,6 +21,8 @@ def push_toCloud(data, device_name, data1) :
         'device_id' : '11111', 
         'cd' : cd
     }
+
+    print(cd)
     res = requests.post('http://35.168.111.248/dashboarddev/public/api/newconsumption', data=payload)
     print(res.text)
 
