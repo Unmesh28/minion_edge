@@ -70,7 +70,7 @@ def process_input(data1) :
 def get_model_result(X):
     quantile_transformer = preprocessing.QuantileTransformer(random_state=0)
 
-    X_tansform = quantile_transformer.fit_transform(X.reshape(1, -1))
+    X_tansform = quantile_transformer.fit_transform(X)
 
     print(X_tansform)
     interpreter = tf.lite.Interpreter(model_path="/home/pi/minion_lab/model.tflite")
