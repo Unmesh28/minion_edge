@@ -104,4 +104,4 @@ def get_model_result(X):
     print("Output data :" + str(output_data))
     sys.stdout.flush()
     with open('/home/pi/model_log.txt','a') as fp:
-            fp.write(output_data)
+            fp.write(str(output_data))
